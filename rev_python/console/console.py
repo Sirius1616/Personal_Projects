@@ -108,7 +108,26 @@ class HBNBCommand(cmd.Cmd):
         """Updates an instance based on the class name and id by adding or updating attribute. 
         Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com".
         """
-        
+        arg_list = arg.split()
+        if len(arg_list) == 0:
+            print("** class name missing **")
+        else:
+            class_name = arg_list[0]
+            if class_name not in self.classes:
+                print("** class doesn't exist **")
+            elif len(arg_list) == 1:
+                    print('** instance id missing **')
+            else:
+                key = "{}.{}".format(arg_list[0], arg_list[1])
+                if key not in storage.all():
+                    print('** no instance found **')
+                else:
+                    if len(arg_list) < 3:
+                        print('** attribute name missing **')
+                    elif len(arg_list) < 4:
+                        print('** value missing **')
+                    else:
+                        print('Good')
 
 
 
