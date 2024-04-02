@@ -99,12 +99,13 @@ class HBNBCommand(cmd.Cmd):
                     list_all.append(value)
                 print(list_all)
 
+
         else:
             for key, value in storage.all().items():
                 list_all.append(str(value))
             print(list_all)
 
-    def update(self, arg):
+    def do_update(self, arg):
         """Updates an instance based on the class name and id by adding or updating attribute. 
         Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com".
         """
@@ -122,12 +123,22 @@ class HBNBCommand(cmd.Cmd):
                 if key not in storage.all():
                     print('** no instance found **')
                 else:
+                    instance = storage.all()[key]
                     if len(arg_list) < 3:
                         print('** attribute name missing **')
                     elif len(arg_list) < 4:
                         print('** value missing **')
                     else:
-                        print('Good')
+                        instance = storage.all()[key]
+                        if len(arg_list) < 3:
+                            print('** attribute name missing **')
+                        elif len(arg_list) < 4:
+                            print('** value missing **')
+                        else:
+                            setattr(instance, arg_list[2], arg_list[3])
+                            storage.all()[key].save()
+
+
 
 
 
